@@ -85,12 +85,16 @@ route.get('/', async (req, res) => {
             return res.status(404).send('No se econtro esa ciudad en la DataBase');
         }
 
-        //Si no hay query solo cargo la Database
-        for (var i = 0; i < coun.length; i++) {
-            await Country.create(coun[i]);
+        const EstaCargada = await Country.findAll();
+        if (!EstaCargada.length) {
+            for (var i = 0; i < coun.length; i++) {
+                await Country.create(coun[i]);
+            }
         }
+        //Si no hay query solo cargo la Database
+
         const listadoName = await Country.findAll({
-            attributes: ["name"]
+            attributes: ["name", "continents"]
         });
 
         res.status(201).send(listadoName);

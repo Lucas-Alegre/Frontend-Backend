@@ -28,3 +28,51 @@ export function getAllCountry() {
 
     }
 }
+export function getSearchinByNamen(name) {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get(`http://localhost:3001/countries?name=${name}`);
+            return dispatch({
+                type: 'GET_NAME_COUNTRY',
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+/*export function getTuristas() {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get(`http://localhost:3001/activities`);
+            return dispatch({
+                type: 'GET_TURISTAS',
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+export function postTuristas(payload) {
+    return async function (dispatch) {
+
+        var json = await axios.post(`http://localhost:3001/countries`,payload);
+        return json;
+    }
+}*/
+
+export function filterByContinents(payload) {
+    return {
+        type: 'FILTER_BY_VALUE',
+        payload: payload
+    }
+}
+
+export function OrderByName(payload) {
+    return {
+        type: 'ORDER_BY_NAME',
+        payload
+    }
+}
